@@ -15,7 +15,7 @@ import io.github.allockye.tracksearcher.parser.Parser;
 public class TrackSearcher {
     private List<Parser> mParsers;
 
-    interface Callback {
+    public interface Callback {
 
         void onSuccess(Track track);
 
@@ -33,7 +33,7 @@ public class TrackSearcher {
         }
     }
 
-    void search(final String artistName, final String trackName, final Callback callback){
+    public void search(final String artistName, final String trackName, final Callback callback){
         new AsyncTask<Void, Void, Track>(){
             @Override
             protected Track doInBackground(Void... voids) {
