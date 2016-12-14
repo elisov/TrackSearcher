@@ -48,7 +48,7 @@ class CustomParser implements Parser {
 ```
 ## License
 ```
-Copyright 2015 Alexey Elisov
+Copyright 2016 Alexey Elisov
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
