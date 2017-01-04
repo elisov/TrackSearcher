@@ -16,11 +16,8 @@ public class TrackSearcher {
     private List<Parser> mParsers;
 
     public interface Callback {
-
         void onSuccess(Track track);
-
         void onFailure();
-
     }
 
     public TrackSearcher() {
@@ -38,7 +35,6 @@ public class TrackSearcher {
             @Override
             protected Track doInBackground(Void... voids) {
                 Track track = null;
-
                 for (Parser parser: mParsers){
                     track = parser.parse(artistName, trackName);
                     if(track != null) {

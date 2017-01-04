@@ -12,6 +12,15 @@ public class Track {
     private String mArtworkUrl;
     private String mCountry;
 
+    public Track() {
+        mArtistName = "Unknown";
+        mTrackName = "Unknown";
+        mAlbumName = "Unknown";
+        mPrimaryGenre = "Unknown";
+        mArtworkUrl = "Unknown";
+        mCountry = "Unknown";
+    }
+
     public String getArtistName() {
         return mArtistName;
     }
