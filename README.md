@@ -1,7 +1,7 @@
 # TrackSearcher
 Android library for getting full information about music track by track title.
 ## Features
-- Parsing of data from ITunes (last.fm, SoundCloud - coming soon)
+- Parsing of data from ITunes, SoundCloud (last.fm - coming soon)
 - Opportunity using custom parsers
 
 ## Setup
