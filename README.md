@@ -7,14 +7,14 @@ Android library for getting full information about music track by track title.
 ## Setup
 Gradle:
 ```gradle
-compile 'io.github.allockye:tracksearcher:1.0'
+compile 'io.github.allockye:tracksearcher:1.1'
 ```
 Maven:
 ```xml
 <dependency>
   <groupId>io.github.allockye</groupId>
   <artifactId>tracksearcher</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -23,6 +23,7 @@ Before calling ```search``` you should to add at least one parser ```addParser``
 ```java
 TrackSearcher trackSearcher = new TrackSearcher();
 trackSearcher.addParser(new ITunesParser());
+trackSearcher.addParser(new SoundCloudParser("YOUR_CLIENT_ID"));
 trackSearcher.search("Night Lovell", "Dark Light", new TrackSearcher.Callback() {
     @Override
     public void onSuccess(Track track) {
