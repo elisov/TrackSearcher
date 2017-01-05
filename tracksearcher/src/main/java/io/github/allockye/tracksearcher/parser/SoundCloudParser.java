@@ -7,9 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import io.github.allockye.tracksearcher.Parser;
 import io.github.allockye.tracksearcher.entity.Track;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,63 +19,51 @@ import okhttp3.Response;
  */
 
 public class SoundCloudParser implements Parser {
-    private String mClientId;
+    private Uri mBaseUri;
 
     public SoundCloudParser(String clientId) {
-        mClientId = clientId;
+        mBaseUri = new Uri.Builder()
+                .scheme("https")
+                .authority("api.soundcloud.com")
+                .appendPath("tracks")
+                .appendQueryParameter("client_id", clientId)
+                .build();
     }
 
     @Override
     public Track parse(String artistName, String trackName) {
         Track track = null;
-        Uri apiEndpoint = new Uri.Builder()
-                .scheme("https")
-                .authority("api.soundcloud.com")
-                .appendPath("tracks")
-                .appendQueryParameter("client_id", mClientId)
-                .appendQueryParameter("q", artistName + " + " + trackName)
-                .build();
         try {
+            Uri apiEndpoint = mBaseUri.buildUpon()
+                    .appendQueryParameter("q", artistName + " + " + trackName)
+                    .build();
             OkHttpClient httpClient = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(apiEndpoint.toString())
                     .build();
             Response response = httpClient.newCall(request).execute();
-            String json = response.body().string();
-            List<Track> tracks = getTrackListFromJson(json);
+            JSONArray tracksJsonArray = new JSONArray(response.body().string());
 
-            if(tracks.size() > 0) {
-                track = tracks.get(0);
+            if(tracksJsonArray.length() > 0) {
+                JSONObject trackJsonObject = tracksJsonArray.getJSONObject(0);
+
+                String username = trackJsonObject.getJSONObject("user").getString("username");
+                String title = trackJsonObject.getString("title");
+                String genre = trackJsonObject.getString("genre");
+                String artwork = trackJsonObject.getString("artwork_url");
+                int duration = trackJsonObject.getInt("duration");
+
+                track = new Track();
+                track.setArtistName(username);
+                track.setTrackName(title);
+                track.setPrimaryGenre(genre);
+                track.setArtworkUrl(artwork);
+                track.setDuration(duration);
             }
+
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return track;
-    }
-
-    private List<Track> getTrackListFromJson(String json) throws JSONException {
-        List<Track> tracks = new ArrayList<>();
-
-        JSONArray jsonRootArray = new JSONArray(json);
-
-        for(int i = 0; i < jsonRootArray.length(); i++){
-            JSONObject jsonObject = jsonRootArray.getJSONObject(i);
-
-            String artistName = jsonObject.getJSONObject("user").getString("username");
-            String trackName = jsonObject.getString("title");
-            String primaryGenre = jsonObject.getString("genre");
-            String artworkUrl = jsonObject.getString("artwork_url");
-
-            Track track = new Track();
-            track.setArtistName(artistName);
-            track.setTrackName(trackName);
-            //track.setAlbumName(albumName);
-            track.setPrimaryGenre(primaryGenre);
-            //track.setCountry(country);
-            track.setArtworkUrl(artworkUrl);
-            tracks.add(track);
-        }
-
-        return tracks;
     }
 }

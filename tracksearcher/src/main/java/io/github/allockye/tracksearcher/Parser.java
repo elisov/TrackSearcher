@@ -1,4 +1,4 @@
-package io.github.allockye.tracksearcher.parser;
+package io.github.allockye.tracksearcher;
 
 import io.github.allockye.tracksearcher.entity.Track;
 

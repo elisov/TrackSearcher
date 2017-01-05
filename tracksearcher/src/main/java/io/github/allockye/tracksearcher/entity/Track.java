@@ -11,14 +11,16 @@ public class Track {
     private String mPrimaryGenre;
     private String mArtworkUrl;
     private String mCountry;
+    private int mDuration;
 
     public Track() {
         mArtistName = "Unknown";
         mTrackName = "Unknown";
         mAlbumName = "Unknown";
         mPrimaryGenre = "Unknown";
-        mArtworkUrl = "Unknown";
+        mArtworkUrl = "https://s.discogs.com/images/default-release.png";
         mCountry = "Unknown";
+        mDuration = 0;
     }
 
     public String getArtistName() {
@@ -67,5 +69,13 @@ public class Track {
 
     public void setCountry(String country) {
         mCountry = country;
+    }
+
+    public int getDuration() {
+        return mDuration;
+    }
+
+    public void setDuration(int duration) {
+        mDuration = duration;
     }
 }

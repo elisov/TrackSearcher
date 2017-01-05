@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.allockye.tracksearcher.entity.Track;
-import io.github.allockye.tracksearcher.parser.Parser;
 
 /**
  * Created by allockye on 12/14/16.
